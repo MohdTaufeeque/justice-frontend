@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
+    // Track if we're waiting for response
+    let isWaitingForResponse = false;
+
     // Toggle chatbot visibility
     function toggleChatbot() {
         chatbot.classList.toggle("active");
@@ -14,42 +17,42 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    chatbotBtn.addEventListener("click", toggleChatbot);
-    closeBtn.addEventListener("click", toggleChatbot);
-
     // Send message function
     async function sendMessage() {
         const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, "user");
-            chatInput.value = "";
+        if (!message || isWaitingForResponse) return;
+
+        // Add user message
+        addMessage(message, "user");
+        chatInput.value = "";
+        isWaitingForResponse = true;
+        
+        try {
+            showTypingIndicator();
             
-            try {
-                showTypingIndicator();
-                
-                // API call
-                const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: message })
+            // API call
+            const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: message })
+            });
+            
+            const data = await response.json();
+            
+            if (data.results?.length > 0) {
+                data.results.forEach(result => {
+                    addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
                 });
-                
-                const data = await response.json();
-                hideTypingIndicator();
-                
-                if (data.results && data.results.length > 0) {
-                    data.results.forEach(result => {
-                        addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
-                    });
-                } else {
-                    addMessage("I couldn't find relevant information. Please try another question.", "bot");
-                }
-                
-            } catch (error) {
-                hideTypingIndicator();
-                addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
-                console.error("Error:", error);
+            } else {
+                addMessage("I couldn't find relevant information. Please try another question.", "bot");
             }
+        } catch (error) {
+            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
+            console.error("Chatbot Error:", error);
+        } finally {
+            hideTypingIndicator();
+            isWaitingForResponse = false;
+            chatInput.focus();
         }
     }
 
@@ -59,22 +62,19 @@ document.addEventListener("DOMContentLoaded", function() {
         msgDiv.className = `message ${sender}-message`;
         msgDiv.textContent = text;
         chatContent.appendChild(msgDiv);
-        // Auto-scroll to bottom
-        chatContent.scrollTop = chatContent.scrollHeight;
+        scrollToBottom();
     }
 
     // Typing indicator
     function showTypingIndicator() {
+        if (document.getElementById("typing-indicator")) return;
+        
         const typingDiv = document.createElement("div");
         typingDiv.className = "typing-indicator";
         typingDiv.id = "typing-indicator";
-        typingDiv.innerHTML = `
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        `;
+        typingDiv.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
         chatContent.appendChild(typingDiv);
-        chatContent.scrollTop = chatContent.scrollHeight;
+        scrollToBottom();
     }
 
     function hideTypingIndicator() {
@@ -82,11 +82,19 @@ document.addEventListener("DOMContentLoaded", function() {
         if (typing) typing.remove();
     }
 
+    // Scroll to bottom
+    function scrollToBottom() {
+        chatContent.scrollTo({
+            top: chatContent.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
     // Event listeners
+    chatbotBtn.addEventListener("click", toggleChatbot);
+    closeBtn.addEventListener("click", toggleChatbot);
     sendBtn.addEventListener("click", sendMessage);
-    chatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") sendMessage();
-    });
+    chatInput.addEventListener("keypress", (e) => e.key === "Enter" && sendMessage());
 
     // Initial welcome message
     setTimeout(() => {
