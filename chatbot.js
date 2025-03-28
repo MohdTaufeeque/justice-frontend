@@ -9,34 +9,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // चैटबॉट टॉगल फंक्शन
     function toggleChatbot() {
         chatbot.classList.toggle("active");
-        if(chatbot.classList.contains("active")) {
-            scrollToBottom();
-        }
     }
 
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
 
-    // ऑटो-स्क्रॉल फंक्शन (पूरी तरह ठीक किया हुआ)
-    function scrollToBottom() {
-        setTimeout(() => {
-            chatContent.scrollTop = chatContent.scrollHeight + 50;
-        }, 50);
-    }
-
-    // मैसेज भेजने का फंक्शन
+    // मैसेज भेजने का फंक्शन (बिना ऑटो-स्क्रॉल के)
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (message) {
-            // यूजर का मैसेज जोड़ें
             addMessage(message, "user");
             chatInput.value = "";
             
-            // तुरंत स्क्रॉल करें
-            scrollToBottom();
-            
             try {
-                // टाइपिंग इंडिकेटर दिखाएं
                 showTypingIndicator();
                 
                 // बैकेंड को रिक्वेस्ट भेजें (आपका मूल API)
@@ -47,11 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
                 
                 const data = await response.json();
-                
-                // टाइपिंग इंडिकेटर हटाएं
                 hideTypingIndicator();
                 
-                // रिस्पॉन्स प्रोसेस करें
                 if (data.results && data.results.length > 0) {
                     data.results.forEach(result => {
                         addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
@@ -60,14 +42,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     addMessage("I couldn't find relevant information. Please try another question.", "bot");
                 }
                 
-                // फिर से स्क्रॉल करें
-                scrollToBottom();
-                
             } catch (error) {
                 hideTypingIndicator();
                 addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
                 console.error("Error:", error);
-                scrollToBottom();
             }
         }
     }
@@ -91,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="typing-dot"></div>
         `;
         chatContent.appendChild(typingDiv);
-        scrollToBottom();
     }
 
     function hideTypingIndicator() {
