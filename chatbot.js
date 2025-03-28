@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Toggle chatbot visibility
     chatbotBtn.addEventListener("click", function() {
         chatbot.classList.toggle("active");
+        // Auto-scroll to bottom when opening
+        if(chatbot.classList.contains("active")) {
+            setTimeout(() => {
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }, 100);
+        }
     });
 
     // Function to send message
@@ -19,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // Clear input
             chatInput.value = "";
+            
+            // Scroll to bottom
+            chatContent.scrollTop = chatContent.scrollHeight;
             
             try {
                 // Show typing indicator
@@ -45,28 +54,36 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     addMessage("I couldn't find relevant information. Can you please rephrase your question?", "bot");
                 }
+                
+                // Scroll to bottom after response
+                chatContent.scrollTop = chatContent.scrollHeight;
             } catch (error) {
                 removeTypingIndicator();
                 addMessage("Sorry, I'm having trouble connecting to the server. Please try again later.", "bot");
                 console.error("Error:", error);
+                chatContent.scrollTop = chatContent.scrollHeight;
             }
         }
     }
 
     // Helper function to add messages
     function addMessage(text, sender) {
-        const messageElement = document.createElement("p");
-        messageElement.classList.add(sender + "-message");
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", `${sender}-message`);
         messageElement.textContent = text;
         chatContent.appendChild(messageElement);
-        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
     // Typing indicator functions
     function addTypingIndicator() {
         const typingElement = document.createElement("div");
         typingElement.id = "typing-indicator";
-        typingElement.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        typingElement.innerHTML = `
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        `;
+        typingElement.classList.add("message", "bot-message");
         chatContent.appendChild(typingElement);
         chatContent.scrollTop = chatContent.scrollHeight;
     }
