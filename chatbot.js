@@ -1,128 +1,54 @@
 document.addEventListener("DOMContentLoaded", function() {
     const chatbot = document.getElementById("chatbot-container");
-    const chatbotBtn = document.getElementById("chatbot-button");
-    const closeBtn = document.getElementById("close-chatbot");
     const chatInput = document.getElementById("chatbot-input");
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Track chat state
-    let isChatbotActive = false;
-    let messageCount = 0;
+    // Toggle chatbot
+    document.getElementById("chatbot-button").addEventListener("click", () => chatbot.classList.add("active"));
+    document.getElementById("close-chatbot").addEventListener("click", () => chatbot.classList.remove("active"));
 
-    // Toggle chatbot with state management
-    function toggleChatbot() {
-        isChatbotActive = !isChatbotActive;
-        chatbot.classList.toggle("active");
-        if (isChatbotActive) {
-            setTimeout(() => chatInput.focus(), 100);
-        }
-    }
-
-    // Event delegation for reliable handling
-    document.body.addEventListener('click', function(e) {
-        if (e.target === chatbotBtn || e.target.closest('#chatbot-button')) {
-            toggleChatbot();
-        }
-        if (e.target === closeBtn || e.target.closest('#close-chatbot')) {
-            toggleChatbot();
-        }
-        if (e.target === sendBtn || e.target.closest('#send-btn')) {
-            sendMessage();
-        }
-    });
-
-    // Robust message handling
+    // Always-working message function
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (!message) return;
-
+        
         // Add user message
-        addMessage(message, "user");
+        const userMsg = document.createElement("div");
+        userMsg.className = "message user-message";
+        userMsg.textContent = message;
+        chatContent.appendChild(userMsg);
         chatInput.value = "";
-        messageCount++;
         
-        try {
-            showTypingIndicator();
-            
-            // API call
-            const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question: message })
-            });
-            
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            const data = await response.json();
-            hideTypingIndicator();
-            
-            if (data.results?.length > 0) {
-                data.results.forEach(result => {
-                    addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
-                });
-            } else {
-                addMessage("I couldn't find relevant information. Please try another question.", "bot");
-            }
-        } catch (error) {
-            hideTypingIndicator();
-            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
-            console.error("Chatbot Error:", error);
-        } finally {
-            // Always ensure input is ready for next message
-            chatInput.focus();
-            chatInput.disabled = false;
-            sendBtn.disabled = false;
-        }
-    }
-
-    // Improved message addition
-    function addMessage(text, sender) {
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `message ${sender}-message`;
-        msgDiv.textContent = text;
+        // Add typing indicator
+        const typing = document.createElement("div");
+        typing.className = "typing-indicator";
+        typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        chatContent.appendChild(typing);
         
-        // Ensure chat content is scrollable
-        chatContent.style.overflowY = 'auto';
-        chatContent.appendChild(msgDiv);
-        
-        // Smooth scroll to bottom
-        setTimeout(() => {
-            chatContent.scrollTo({
-                top: chatContent.scrollHeight,
-                behavior: 'smooth'
-            });
-        }, 50);
-    }
-
-    // Typing indicator functions
-    function showTypingIndicator() {
-        if (document.getElementById("typing-indicator")) return;
-        
-        const typingDiv = document.createElement("div");
-        typingDiv.className = "typing-indicator";
-        typingDiv.id = "typing-indicator";
-        typingDiv.innerHTML = `
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        `;
-        chatContent.appendChild(typingDiv);
+        // Scroll to bottom
         chatContent.scrollTop = chatContent.scrollHeight;
+        
+        // Simulate API response (remove this in production)
+        setTimeout(() => {
+            typing.remove();
+            const botMsg = document.createElement("div");
+            botMsg.className = "message bot-message";
+            botMsg.textContent = "This is a test response to message #" + (document.querySelectorAll(".message").length/2);
+            chatContent.appendChild(botMsg);
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }, 1500);
     }
 
-    function hideTypingIndicator() {
-        const typing = document.getElementById("typing-indicator");
-        if (typing) typing.remove();
-    }
-
-    // Input handling
-    chatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") sendMessage();
-    });
-
-    // Initial welcome message
+    // Event listeners
+    sendBtn.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keypress", (e) => e.key === "Enter" && sendMessage());
+    
+    // Initial message
     setTimeout(() => {
-        addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
-    }, 1000);
+        const welcomeMsg = document.createElement("div");
+        welcomeMsg.className = "message bot-message";
+        welcomeMsg.textContent = "Hello! I'm your Justice Assistant. How may I help you today?";
+        chatContent.appendChild(welcomeMsg);
+    }, 500);
 });
