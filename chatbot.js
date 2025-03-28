@@ -6,67 +6,99 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Toggle chatbot visibility
+    // Track chat state
+    let isChatbotActive = false;
+    let messageCount = 0;
+
+    // Toggle chatbot with state management
     function toggleChatbot() {
+        isChatbotActive = !isChatbotActive;
         chatbot.classList.toggle("active");
-        // Auto-focus input when opened
-        if (chatbot.classList.contains("active")) {
+        if (isChatbotActive) {
             setTimeout(() => chatInput.focus(), 100);
         }
     }
 
-    chatbotBtn.addEventListener("click", toggleChatbot);
-    closeBtn.addEventListener("click", toggleChatbot);
+    // Event delegation for reliable handling
+    document.body.addEventListener('click', function(e) {
+        if (e.target === chatbotBtn || e.target.closest('#chatbot-button')) {
+            toggleChatbot();
+        }
+        if (e.target === closeBtn || e.target.closest('#close-chatbot')) {
+            toggleChatbot();
+        }
+        if (e.target === sendBtn || e.target.closest('#send-btn')) {
+            sendMessage();
+        }
+    });
 
-    // Send message function
+    // Robust message handling
     async function sendMessage() {
         const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, "user");
-            chatInput.value = "";
-            chatInput.focus(); // Keep focus on input
+        if (!message) return;
+
+        // Add user message
+        addMessage(message, "user");
+        chatInput.value = "";
+        messageCount++;
+        
+        try {
+            showTypingIndicator();
             
-            try {
-                showTypingIndicator();
-                
-                // Simulate API call (replace with your actual API)
-                const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: message })
+            // API call
+            const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: message })
+            });
+            
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            hideTypingIndicator();
+            
+            if (data.results?.length > 0) {
+                data.results.forEach(result => {
+                    addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
                 });
-                
-                const data = await response.json();
-                hideTypingIndicator();
-                
-                if (data.results && data.results.length > 0) {
-                    data.results.forEach(result => {
-                        addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
-                    });
-                } else {
-                    addMessage("I couldn't find relevant information. Please try another question.", "bot");
-                }
-                
-            } catch (error) {
-                hideTypingIndicator();
-                addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
-                console.error("Error:", error);
+            } else {
+                addMessage("I couldn't find relevant information. Please try another question.", "bot");
             }
+        } catch (error) {
+            hideTypingIndicator();
+            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
+            console.error("Chatbot Error:", error);
+        } finally {
+            // Always ensure input is ready for next message
+            chatInput.focus();
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
         }
     }
 
-    // Add message to chat
+    // Improved message addition
     function addMessage(text, sender) {
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender}-message`;
         msgDiv.textContent = text;
+        
+        // Ensure chat content is scrollable
+        chatContent.style.overflowY = 'auto';
         chatContent.appendChild(msgDiv);
-        // Auto-scroll to bottom (optional)
-        chatContent.scrollTop = chatContent.scrollHeight;
+        
+        // Smooth scroll to bottom
+        setTimeout(() => {
+            chatContent.scrollTo({
+                top: chatContent.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 50);
     }
 
-    // Typing indicator
+    // Typing indicator functions
     function showTypingIndicator() {
+        if (document.getElementById("typing-indicator")) return;
+        
         const typingDiv = document.createElement("div");
         typingDiv.className = "typing-indicator";
         typingDiv.id = "typing-indicator";
@@ -76,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="typing-dot"></div>
         `;
         chatContent.appendChild(typingDiv);
-        // Auto-scroll to bottom
         chatContent.scrollTop = chatContent.scrollHeight;
     }
 
@@ -85,8 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (typing) typing.remove();
     }
 
-    // Event listeners
-    sendBtn.addEventListener("click", sendMessage);
+    // Input handling
     chatInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") sendMessage();
     });
@@ -94,12 +124,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initial welcome message
     setTimeout(() => {
         addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
-    }, 500);
-
-    // Ensure input stays focused
-    chatInput.addEventListener('blur', () => {
-        if (chatbot.classList.contains('active')) {
-            setTimeout(() => chatInput.focus(), 100);
-        }
-    });
+    }, 1000);
 });
