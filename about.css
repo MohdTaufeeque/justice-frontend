@@ -1,0 +1,145 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Header */
+header {
+    background: #003366;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+}
+
+/* Dropdown Menu */
+.about-menu {
+    margin: 20px;
+}
+
+#menu-toggle {
+    background: #003366;
+    color: rgb(255, 255, 255);
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#menu-list {
+    list-style: none;
+    padding: 0;
+    display: none;
+}
+
+#menu-list li {
+    background: #94b8be;
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Image Slider */
+.image-slider {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+}
+
+.active {
+    display: block;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+/* Stats Section */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stat-box {
+    background: #12d4db;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+}
+
+/* Timeline */
+.timeline ul {
+    list-style: none;
+    padding: 0;
+}
+
+.timeline li {
+    margin: 10px 0;
+}
+
+/* FAQ */
+.faq-item {
+    margin: 10px;
+}
+
+.faq-answer {
+    display: none;
+    background: #10c7ff;
+    padding: 10px;
+}
+
+
+/* Footer in a Box */
+footer {
+    background: #4097efe3;
+    color: rgb(229, 255, 0);
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Our Journey Alignment */
+.timeline {
+    background: #73a6fe;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+    text-align: left;
+}
+
+.timeline ul {
+    list-style: none;
+    padding: 0;
+}
+
+.timeline li {
+    margin: 10px 0;
+    padding: 10px;
+    border-left: 3px solid #003366;
+    background: #9ff4be;
+    border-radius: 5px;
+    padding-left: 15px;
+}

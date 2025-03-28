@@ -1,0 +1,476 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+/* Header */
+.top-bar {
+    background: #000000;
+    color: rgb(0, 235, 243);
+    padding: 10px;
+    text-align: center;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #16cdd3;
+    padding: 10px 20px;
+}
+
+.logo {
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+/* Search Bar */
+.search-bar input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* Content Section */
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.info-box {
+    width: 45%;
+    background: rgba(61, 184, 255, 0.49);
+    padding: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.dark-background {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+/* Image Carousel */
+.image-carousel {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
+}
+
+.carousel-image {
+    width: 600px;
+    height: 300px;
+    margin-right: 50px;
+    border-radius: 45px;
+}
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    width: 500%;
+    animation: scroll 10s linear infinite;
+}
+
+.carousel img {
+    width: 20%;
+    height: auto;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+
+
+/* Footer */
+footer {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    text-align:  center ;
+    padding: 30px;
+    margin-top: 50px;
+}
+/* Services Section */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    padding: 40px;
+    background-color: #000000;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Individual Service Box */
+.service-item {
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover {
+    transform: scale(1.1);
+}
+
+/* Icons */
+.service-item img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Service Text */
+.service-item p {
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-weight: bold;
+}
+/* Services Section */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Individual Service Box */
+.service-item {
+    display: flex;
+    justify-content: center;
+}
+
+.service-box {
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    width: 180px;
+}
+
+.service-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Icons */
+.service-box img {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Service Text */
+.service-box p {
+    color: #fcfcfc;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+
+
+
+/* Services Section */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 40px;
+    background-color: #dfedee;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Individual Service Box */
+.service-item {
+    display: flex;
+    justify-content: center;
+}
+
+.service-box {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    width: 180px;
+    overflow: hidden;
+}
+
+/* Gradient Border Animation */
+.service-border {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00c6ff, #0072ff, #ff0080);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.service-box:hover .service-border {
+    opacity: 1;
+}
+
+/* Hover Effect */
+.service-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Icons */
+.service-box img {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Service Text */
+.service-box p {
+    color: #004b91;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+   
+
+
+/* DOJ News Section */
+.doj-news {
+    text-align: center;
+    padding: 40px;
+    background: #ffffff;
+}
+
+.doj-news h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #003366;
+    text-transform: uppercase;
+}
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.news-card {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover {
+    transform: scale(1.05);
+}
+
+.news-card h3 {
+    font-size: 18px;
+    color: #003366;
+}
+
+.news-card p {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.news-card a {
+    color: #003366;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.news-card a:hover {
+    color: #ff6600; /* DOJ accent color */
+}
+    
+
+
+/* DOJ Hero Section */
+.doj-hero {
+    background: url('doj-banner.jpg') no-repeat center center/cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.doj-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 51, 0.6);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-btn {
+    background: #ffd700; /* DOJ gold color */
+    color: #003366;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.hero-btn:hover {
+    background: #ffcc00;
+}
+ 
+
+
+/* DOJ Testimonials Section */
+.doj-testimonials {
+    text-align: center;
+    padding: 50px;
+    background: #003366;
+    color: white;
+}
+
+.doj-testimonials h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.testimonials-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.testimonial {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+}
+
+.testimonial h4 {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* DOJ Services Section */
+.doj-services {
+    text-align: center;
+    padding: 50px;
+    background: #f8f9fa;
+}
+
+.doj-services h2 {
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #003366;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.service-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.service-box img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.service-box h3 {
+    font-size: 18px;
+    color: #003366;
+}
+  
+

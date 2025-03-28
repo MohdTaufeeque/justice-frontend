@@ -1,0 +1,190 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: #1bda3573;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background: #000000;
+    color: white;
+    padding: 20px;
+}
+
+/* Breaking News Ticker */
+.news-ticker {
+    background: rgba(255, 0, 0, 0.866);
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+}
+.news-article {
+    background: rgb(8, 6, 6);
+    padding: 20px;
+    max-width: 700px;
+    margin: 20px auto;
+    border-radius: 5Spx;
+    box-shadow: 0 4px 8px rgba(26, 0, 0, 0.1);
+    text-align: centre;
+}
+
+.news-article h2 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.news-article img {
+    width: 50%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.news-article p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+/* Search & Filter */
+.search-filter {
+    margin: 20px;
+}
+.search-filter input, .search-filter select, .search-filter button {
+    padding: 10px;
+    margin: 5px;
+}
+
+/* Carousel */
+.carousel {
+    position: relative;
+    max-width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.carousel img {
+    width: 100%;
+    border-radius: 10px;
+}
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    background: black;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* News Grid */
+/* Trending News Sidebar (Initially Hidden) */
+.trending-sidebar {
+    background: white;
+    padding: 20px;
+    position: fixed;
+    right: 10px;
+    top: 50px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none; /* Hidden by default */
+    flex-direction: column; /* Aligns items top-down */
+}
+
+.trending-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.trending-sidebar ul li {
+    margin: 10px 0; /* Space between items */
+}
+
+/* Show Sidebar */
+.trending-sidebar.show {
+    display: flex;
+}
+
+/* Toggle Button */
+#toggleTrending {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    padding: 10px;
+    background: #04254c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+    margin: 20px;
+}
+
+/* Trending Sidebar */
+.trending-sidebar {
+    background: rgb(192, 162, 162);
+    padding: 20px;
+    position: fixed;
+    right: 10px;
+    top: 50px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Comments Section */
+.comments-section {
+    margin: 40px;
+}
+.comments-section textarea {
+    width: 80%;
+    height: 80px;
+}
+.carousel {
+    position: relative;
+    max-width: 50%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel img {
+    width: 50%;
+    flex: 0 0 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Navigation Buttons */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+/* Footer in a Box */
+footer {
+    background: #000000e3;
+    color: rgb(255, 0, 170);
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}

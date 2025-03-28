@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - DOJ</title>
+    <link rel="stylesheet" href="resources.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Government Resources & Forms</h1>
+        <p>Find official government forms, regulations, and services all in one place.</p>
+    </header>
+
+    <!-- Search Bar -->
+    <section class="search-container">
+        <input type="text" id="searchInput" placeholder="Search resources..." onkeyup="filterResources()">
+    </section>
+    <!-- Image Section -->
+    <section class="image-section">
+        <img src="resources1.jpeg" alt="Government Forms and Resources">
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources-section">
+        <!-- Highlighted Forms -->
+        <div class="resource-box">
+            <h2>📄 Highlighted Forms</h2>
+            <p>Find essential government forms used for legal and administrative processes.</p>
+            <ul id="formsList">
+                <li><a href="#">ATF 4473 - Federal Firearms Transaction Record</a></li>
+                <li><a href="#">SF 95 - Claim for Damage, Injury, or Death</a></li>
+                <li><a href="#">DEA Diversion Control Forms</a></li>
+                <li><a href="#">FARA eFile - Foreign Agents Registration</a></li>
+            </ul>
+            <button class="toggle-btn" onclick="toggleSection('moreForms')">More Forms ⬇</button>
+            <div id="moreForms" class="hidden">
+                <ul>
+                    <li><a href="#">DOJ Criminal Justice Forms</a></li>
+                    <li><a href="#">Federal Court Documents</a></li>
+                </ul>
+            </div>
+        </div>
+
+       <!-- Government Resources -->
+<div class="resource-box">
+    <h2>🏛 Government Resources</h2>
+    <p>Access official government websites for grants, voting, and regulations.</p>
+    <ul id="govResources">
+        <li><a href="#">Grants.gov - Federal Grants & Funding</a></li>
+        <li><a href="#">Regulations.gov - Federal Rules & Regulations</a></li>
+        <li><a href="#">Vote.gov - Voter Registration & Information</a></li>
+    </ul>
+    <button id="govToggleBtn" class="toggle-btn" onclick="toggleSection('moreGov', 'govToggleBtn')">More ⬇</button>
+    <div id="moreGov" class="hidden">
+        <ul>
+            <li><a href="#">Federal Register - Official Documents</a></li>
+            <li><a href="#">FOIA.gov - Freedom of Information Act Requests</a></li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- Legal Assistance Section -->
+        <div class="resource-box">
+            <h2>⚖️ Legal Assistance</h2>
+            <p>Find resources for legal aid, public defenders, and civil rights protection.</p>
+            <ul>
+                <li><a href="#">Find a Public Defender</a></li>
+                <li><a href="#">Civil Rights Division - DOJ</a></li>
+                <li><a href="#">Legal Aid Assistance Programs</a></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Department of Justice. All Rights Reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Accessibility</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </footer>
+
+</body>
+</html>

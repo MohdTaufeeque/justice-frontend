@@ -1,0 +1,100 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+/* Hero Section */
+.hero-learn {
+    background: url('hero.jpg') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    position: relative;
+}
+
+.hero-learn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 255, 242, 0.793);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    margin: 0;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-top: 10px;
+}
+
+/* Info Section */
+.info-section {
+    padding: 50px 20px;
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: auto;
+    background: rgb(85, 255, 238);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.info-container.reverse {
+    flex-direction: row-reverse;
+}
+
+.info-text {
+    flex: 1;
+    padding: 20px;
+}
+
+.info-text h2 {
+    font-size: 1.8rem;
+    color: #000000;
+}
+
+.info-text p {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.info-image {
+    flex: 1;
+}
+
+.info-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Footer */
+footer {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}

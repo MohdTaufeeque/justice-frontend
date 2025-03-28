@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOJ News & Updates</title>
+    <link rel="stylesheet" href="news.css">
+    <script defer src="news.js"></script>
+</head>
+<body>
+
+    <!--  DOJ Header -->
+    <header>
+        <h1>Latest News & Updates</h1>
+    </header>
+
+    <!--  Breaking News Ticker -->
+    <div class="news-ticker">
+        <marquee>🚨 Breaking: DOJ Investigates New Cybersecurity Threat | DOJ Announces Major Lawsuit | Supreme Court Ruling on Privacy...</marquee>
+    </div>
+
+    <!--  Search & Filter -->
+    <div class="search-filter">
+        <input type="text" id="searchBar" placeholder="Search news...">
+        <select id="newsFilter">
+            <option value="all">All Categories</option>
+            <option value="crime">Criminal Justice</option>
+            <option value="civil">Civil Rights</option>
+            <option value="consumer">Consumer Protection</option>
+        </select>
+        <button onclick="filterNews()">Apply</button>
+    </div>
+<section class="news-article">
+    <h2>Justice Department Launches Investigation</h2>
+    <img src="news111.jpeg" alt="DOJ Investigation">
+    <p>
+       The U.S. Department of Justice (DOJ) has initiated an investigation related to India, focusing on potential legal, financial, or trade-related concerns. While specific details remain classified, sources suggest that the probe could involve issues such as corporate fraud, cybersecurity threats, trade regulations, or human rights concerns.
+
+Officials state that this investigation is part of a broader international effort to enforce laws and ensure compliance with global standards of justice and transparency. The DOJ has not disclosed any direct allegations but has assured that the findings will be made public as the inquiry progresses.
+
+Legal experts believe this move could have diplomatic and economic implications, especially if it involves multinational corporations, regulatory violations, or international agreements. The DOJ has emphasized its commitment to due process and fair investigation while collaborating with relevant authorities.
+
+
+    </p>
+   
+</section>
+
+    <!--  News Carousel -->
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="news12.jpg" alt="Featured News">
+            <img src="news1.jpeg" alt="DOJ Investigation">
+            <img src="news2.jpeg" alt="New Laws Announced">
+        </div>
+        <button class="prev" onclick="prevSlide()">❮</button>
+        <button class="next" onclick="nextSlide()">❯</button>
+    </div>
+
+    <!--  News Articles -->
+    <section class="news-container" id="newsList">
+        <!-- News items will be loaded dynamically here -->
+    </section>
+
+    <!--  Pagination -->
+    <div class="pagination">
+        <button id="prevPage"></button>
+        <span id="pageNumber"></span>
+        <button id="nextPage"></button>
+    </div>
+
+<!-- Trending News Section  -->
+<button id="toggleTrending">Show Trending News</button>
+<aside class="trending-sidebar hidden" id="trendingNews">
+    <h2>🔥 Trending News</h2>
+    <ul id="trendingList">
+        <li><a href="#">Supreme Court Decision on Data Privacy</a></li>
+        <li><a href="#">DOJ Expands Criminal Investigation</a></li>
+        <li><a href="#">New Consumer Protection Laws</a></li>
+        <li><a href="#">DOJ Cybersecurity Crackdown</a></li>
+    </ul>
+</aside>
+
+
+    <!--  YouTube News Section -->
+    <section class="youtube-section">
+        <h2>Latest DOJ Video Updates</h2>
+        <iframe width="460" height="315" src="https://www.youtube.com/embed/example_video_id" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <!--  Comments Section -->
+    <section class="comments-section">
+        <h2>Leave a Comment</h2>
+        <textarea id="commentBox" placeholder="Write your comment..."></textarea>
+        <button onclick="submitComment()">Post Comment</button>
+        <div id="commentsList"></div>
+    </section>
+
+<!-- Footer in Box -->
+<footer>
+    <p>&copy; 2025 Department of Justice, Government of India.</p>
+</footer>
+
+</body>
+</html>
