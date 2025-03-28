@@ -1,54 +1,95 @@
 document.addEventListener("DOMContentLoaded", function() {
     const chatbot = document.getElementById("chatbot-container");
+    const chatbotBtn = document.getElementById("chatbot-button");
+    const closeBtn = document.getElementById("close-chatbot");
     const chatInput = document.getElementById("chatbot-input");
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Toggle chatbot
-    document.getElementById("chatbot-button").addEventListener("click", () => chatbot.classList.add("active"));
-    document.getElementById("close-chatbot").addEventListener("click", () => chatbot.classList.remove("active"));
+    // Toggle chatbot visibility
+    function toggleChatbot() {
+        chatbot.classList.toggle("active");
+        if (chatbot.classList.contains("active")) {
+            chatInput.focus();
+        }
+    }
 
-    // Always-working message function
+    chatbotBtn.addEventListener("click", toggleChatbot);
+    closeBtn.addEventListener("click", toggleChatbot);
+
+    // Send message function
     async function sendMessage() {
         const message = chatInput.value.trim();
-        if (!message) return;
-        
-        // Add user message
-        const userMsg = document.createElement("div");
-        userMsg.className = "message user-message";
-        userMsg.textContent = message;
-        chatContent.appendChild(userMsg);
-        chatInput.value = "";
-        
-        // Add typing indicator
-        const typing = document.createElement("div");
-        typing.className = "typing-indicator";
-        typing.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
-        chatContent.appendChild(typing);
-        
-        // Scroll to bottom
+        if (message) {
+            addMessage(message, "user");
+            chatInput.value = "";
+            
+            try {
+                showTypingIndicator();
+                
+                // API call
+                const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: message })
+                });
+                
+                const data = await response.json();
+                hideTypingIndicator();
+                
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(result => {
+                        addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
+                    });
+                } else {
+                    addMessage("I couldn't find relevant information. Please try another question.", "bot");
+                }
+                
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
+                console.error("Error:", error);
+            }
+        }
+    }
+
+    // Add message to chat
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${sender}-message`;
+        msgDiv.textContent = text;
+        chatContent.appendChild(msgDiv);
+        // Auto-scroll to bottom
         chatContent.scrollTop = chatContent.scrollHeight;
-        
-        // Simulate API response (remove this in production)
-        setTimeout(() => {
-            typing.remove();
-            const botMsg = document.createElement("div");
-            botMsg.className = "message bot-message";
-            botMsg.textContent = "This is a test response to message #" + (document.querySelectorAll(".message").length/2);
-            chatContent.appendChild(botMsg);
-            chatContent.scrollTop = chatContent.scrollHeight;
-        }, 1500);
+    }
+
+    // Typing indicator
+    function showTypingIndicator() {
+        const typingDiv = document.createElement("div");
+        typingDiv.className = "typing-indicator";
+        typingDiv.id = "typing-indicator";
+        typingDiv.innerHTML = `
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        `;
+        chatContent.appendChild(typingDiv);
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+        const typing = document.getElementById("typing-indicator");
+        if (typing) typing.remove();
     }
 
     // Event listeners
     sendBtn.addEventListener("click", sendMessage);
-    chatInput.addEventListener("keypress", (e) => e.key === "Enter" && sendMessage());
-    
-    // Initial message
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
+
+    // Initial welcome message
     setTimeout(() => {
-        const welcomeMsg = document.createElement("div");
-        welcomeMsg.className = "message bot-message";
-        welcomeMsg.textContent = "Hello! I'm your Justice Assistant. How may I help you today?";
-        chatContent.appendChild(welcomeMsg);
+        addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
     }, 500);
 });
