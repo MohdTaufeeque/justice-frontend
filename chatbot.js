@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Toggle chatbot visibility
+    // चैटबॉट टॉगल फंक्शन
     function toggleChatbot() {
         chatbot.classList.toggle("active");
         if(chatbot.classList.contains("active")) {
@@ -17,41 +17,62 @@ document.addEventListener("DOMContentLoaded", function() {
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
 
-    // Auto-scroll to bottom
+    // ऑटो-स्क्रॉल फंक्शन (पूरी तरह ठीक किया हुआ)
     function scrollToBottom() {
         setTimeout(() => {
-            chatContent.scrollTop = chatContent.scrollHeight;
-        }, 100);
+            chatContent.scrollTop = chatContent.scrollHeight + 50;
+        }, 50);
     }
 
-    // Send message function
+    // मैसेज भेजने का फंक्शन
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (message) {
+            // यूजर का मैसेज जोड़ें
             addMessage(message, "user");
             chatInput.value = "";
+            
+            // तुरंत स्क्रॉल करें
             scrollToBottom();
             
             try {
+                // टाइपिंग इंडिकेटर दिखाएं
                 showTypingIndicator();
                 
-                // Simulate API call
-                setTimeout(() => {
-                    hideTypingIndicator();
-                    addMessage("Thank you for your message. Our team will get back to you shortly.", "bot");
-                    scrollToBottom();
-                }, 1000);
+                // बैकेंड को रिक्वेस्ट भेजें (आपका मूल API)
+                const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: message })
+                });
+                
+                const data = await response.json();
+                
+                // टाइपिंग इंडिकेटर हटाएं
+                hideTypingIndicator();
+                
+                // रिस्पॉन्स प्रोसेस करें
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(result => {
+                        addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
+                    });
+                } else {
+                    addMessage("I couldn't find relevant information. Please try another question.", "bot");
+                }
+                
+                // फिर से स्क्रॉल करें
+                scrollToBottom();
                 
             } catch (error) {
                 hideTypingIndicator();
-                addMessage("Sorry, I'm having some technical issues. Please try again later.", "bot");
+                addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
                 console.error("Error:", error);
                 scrollToBottom();
             }
         }
     }
 
-    // Add message to chat
+    // मैसेज जोड़ने का फंक्शन
     function addMessage(text, sender) {
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender}-message`;
@@ -59,11 +80,11 @@ document.addEventListener("DOMContentLoaded", function() {
         chatContent.appendChild(msgDiv);
     }
 
-    // Typing indicator
+    // टाइपिंग इंडिकेटर फंक्शन
     function showTypingIndicator() {
         const typingDiv = document.createElement("div");
+        typingDiv.className = "typing-indicator";
         typingDiv.id = "typing-indicator";
-        typingDiv.className = "message bot-message";
         typingDiv.innerHTML = `
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
@@ -78,12 +99,14 @@ document.addEventListener("DOMContentLoaded", function() {
         if (typing) typing.remove();
     }
 
-    // Event listeners
+    // इवेंट लिस्नर्स
     sendBtn.addEventListener("click", sendMessage);
     chatInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") sendMessage();
     });
 
-    // Initial welcome message
-    addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
+    // वेलकम मैसेज
+    setTimeout(() => {
+        addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
+    }, 500);
 });
