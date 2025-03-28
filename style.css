@@ -1,200 +1,78 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+/* Global Styles */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #000000;
 }
 
-/* Header */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f5f5f5;
+}
+
+/* Header Styles */
 .top-bar {
-    background: #000000;
-    color: rgb(0, 235, 243);
-    padding: 10px;
+    background: #000;
+    color: #00f7ff;
+    padding: 0.5rem;
     text-align: center;
+    font-size: 0.9rem;
 }
 
 .nav-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background: #16cdd3;
-    padding: 10px 20px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
 }
 
 .logo {
     height: 50px;
-    margin-bottom: 10px;
+    margin-right: 1rem;
+}
+
+.nav-bar h1 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
 }
 
 nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
-    justify-content: center;
+    list-style: none;
     width: 100%;
+    justify-content: center;
+    background: #16cdd3;
 }
 
 nav ul li {
-    margin: 0 15px;
+    margin: 0 1rem;
 }
 
 nav ul li a {
-    text-decoration: none;
     color: white;
-    font-size: 18px;
-}
-
-/* Search Bar */
-.search-bar input {
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Content Section */
-.content-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-}
-
-.info-box {
-    width: 45%;
-    background: rgba(61, 184, 255, 0.49);
-    padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.dark-background {
-    background: #ffffff;
-    color: rgb(0, 0, 0);
-}
-
-/* Image Carousel */
-.image-carousel {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 20px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-}
-
-.carousel-image {
-    width: 600px;
-    height: 300px;
-    margin-right: 50px;
-    border-radius: 45px;
-    scroll-snap-align: start;
-}
-
-/* Footer */
-footer {
-    background: #ffffff;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    padding: 30px;
-    margin-top: 50px;
-}
-
-/* Services Section */
-.services-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 30px;
-    padding: 40px;
-    background-color: #000000;
-    border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-}
-
-.service-item {
-    padding: 15px;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.service-item:hover {
-    transform: scale(1.1);
-}
-
-.service-item img {
-    width: 100px;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-}
-
-.service-item p {
-    color: rgb(0, 0, 0);
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* DOJ News Section */
-.doj-news {
-    text-align: center;
-    padding: 40px;
-    background: #ffffff;
-}
-
-.doj-news h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #003366;
-    text-transform: uppercase;
-}
-
-.news-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.news-card {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.news-card:hover {
-    transform: scale(1.05);
-}
-
-.news-card h3 {
-    font-size: 18px;
-    color: #003366;
-}
-
-.news-card p {
-    font-size: 14px;
-    color: #666;
-    margin: 10px 0;
-}
-
-.news-card a {
-    color: #003366;
-    font-weight: bold;
     text-decoration: none;
-    transition: color 0.3s;
+    font-weight: 500;
+    padding: 0.5rem;
+    display: block;
 }
 
-.news-card a:hover {
-    color: #ff6600;
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
 }
 
-/* DOJ Hero Section */
+/* Hero Section */
 .doj-hero {
-    background: url('doj-banner.jpg') no-repeat center center/cover;
-    height: 400px;
+    background: url('hero-banner.jpg') center/cover no-repeat;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -204,215 +82,199 @@ footer {
 }
 
 .doj-hero::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 51, 0.6);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
+    max-width: 800px;
+    padding: 2rem;
 }
 
 .hero-content h1 {
-    font-size: 36px;
-    text-transform: uppercase;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-    font-size: 18px;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .hero-btn {
     background: #ffd700;
     color: #003366;
-    padding: 12px 20px;
+    padding: 0.8rem 1.5rem;
     text-decoration: none;
+    border-radius: 5px;
     font-weight: bold;
-    border-radius: 6px;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
 }
 
 .hero-btn:hover {
     background: #ffcc00;
+    transform: translateY(-2px);
 }
 
-/* DOJ Testimonials Section */
-.doj-testimonials {
-    text-align: center;
-    padding: 50px;
-    background: #003366;
-    color: white;
-}
-
-.doj-testimonials h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-.testimonials-container {
+/* Content Sections */
+.content-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.testimonial {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+.info-box {
+    flex: 1 1 45%;
+    min-width: 300px;
+    margin: 1rem;
+    padding: 1.5rem;
+    background: rgba(61, 184, 255, 0.49);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-background {
+    background: #fff;
+    color: #000;
+}
+
+/* Image Gallery */
+.image-gallery {
+    padding: 2rem;
+    background: #fff;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.gallery-container img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
     border-radius: 8px;
-    width: 60%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-.testimonial h4 {
-    margin-top: 10px;
-    font-size: 14px;
-    font-weight: bold;
+.gallery-container img:hover {
+    transform: scale(1.02);
 }
 
-/* DOJ Services Section */
-.doj-services {
-    text-align: center;
-    padding: 50px;
-    background: #f8f9fa;
-}
-
-.doj-services h2 {
-    font-size: 26px;
-    margin-bottom: 30px;
-    color: #003366;
-}
-
-.services-grid {
+/* Services Section */
+.services-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 900px;
-    margin: auto;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: #fff;
 }
 
-.service-box {
-    background: white;
-    padding: 20px;
+.service-item {
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-.service-box:hover {
+.service-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.service-box img {
-    width: 60px;
-    margin-bottom: 15px;
+.service-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
-.service-box h3 {
-    font-size: 18px;
+.service-item p {
+    font-weight: 600;
     color: #003366;
 }
 
-/* Mobile Responsive Styles */
-@media only screen and (max-width: 768px) {
+/* Footer */
+footer {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.footer-content a {
+    color: #ffd700;
+    text-decoration: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
     .nav-bar {
-        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
     }
     
     nav ul {
+        display: none;
         flex-direction: column;
-        align-items: center;
+        width: 100%;
+    }
+    
+    nav ul.active {
+        display: flex;
     }
     
     nav ul li {
-        margin: 5px 0;
+        margin: 0.5rem 0;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
     }
     
     .content-container {
-        flex-direction: column;
-        padding: 10px;
+        padding: 1rem;
     }
     
     .info-box {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    .image-carousel {
-        padding: 10px;
-    }
-    
-    .carousel-image {
-        width: 250px;
-        height: 150px;
-        margin-right: 15px;
-    }
-    
-    .services-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 15px;
-        gap: 10px;
-    }
-    
-    .service-item {
-        padding: 10px;
-    }
-    
-    .news-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .news-card {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .testimonial {
-        width: 90%;
-    }
-    
-    footer {
-        padding: 20px 10px;
-    }
-    
-    .doj-hero {
-        height: 300px;
-    }
-    
-    .hero-content h1 {
-        font-size: 28px;
+        min-width: 100%;
+        margin: 0.5rem 0;
     }
 }
 
-@media only screen and (max-width: 480px) {
-    .services-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .nav-bar h1 {
-        font-size: 1.2rem;
-        text-align: center;
-    }
-    
-    .doj-hero {
-        height: 250px;
-    }
-    
+@media (max-width: 480px) {
     .hero-content h1 {
-        font-size: 24px;
+        font-size: 1.8rem;
     }
     
     .hero-content p {
-        font-size: 16px;
+        font-size: 1rem;
+    }
+    
+    .services-container {
+        grid-template-columns: 1fr 1fr;
     }
 }

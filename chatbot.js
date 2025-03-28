@@ -1,58 +1,92 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const chatbot = document.getElementById("chatbot-container");
     const chatbotBtn = document.getElementById("chatbot-button");
     const chatInput = document.getElementById("chatbot-input");
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Chatbot toggle
-    chatbotBtn.addEventListener("click", function () {
+    // Toggle chatbot visibility
+    chatbotBtn.addEventListener("click", function() {
         chatbot.classList.toggle("active");
     });
 
     // Function to send message
     async function sendMessage() {
         const message = chatInput.value.trim();
-        if (message !== "") {
-            appendMessage("You: " + message, "user-message");
-
+        if (message) {
+            // Add user message
+            addMessage(message, "user");
+            
+            // Clear input
+            chatInput.value = "";
+            
             try {
+                // Show typing indicator
+                addTypingIndicator();
+                
+                // Send to backend
                 const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: message }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: message })
                 });
-
+                
                 const data = await response.json();
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+                
                 if (data.results && data.results.length > 0) {
                     data.results.forEach(result => {
-                        appendMessage(`Bot: <strong>${result.title}</strong> - ${result.description || result.link || ''}`, "bot-message");
+                        addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
                     });
                 } else {
-                    appendMessage("Bot: No results found.", "bot-message");
+                    addMessage("I couldn't find relevant information. Can you please rephrase your question?", "bot");
                 }
             } catch (error) {
-                appendMessage("Bot: Server error occurred.", "bot-message");
+                removeTypingIndicator();
+                addMessage("Sorry, I'm having trouble connecting to the server. Please try again later.", "bot");
+                console.error("Error:", error);
             }
-
-            chatInput.value = "";
-            chatContent.scrollTop = chatContent.scrollHeight;
         }
     }
 
-    // Function to append messages to chat content
-    function appendMessage(message, className) {
+    // Helper function to add messages
+    function addMessage(text, sender) {
         const messageElement = document.createElement("p");
-        messageElement.classList.add(className);
-        messageElement.innerHTML = message;
+        messageElement.classList.add(sender + "-message");
+        messageElement.textContent = text;
         chatContent.appendChild(messageElement);
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
-    // Send button click event
-    sendBtn.addEventListener("click", sendMessage);
+    // Typing indicator functions
+    function addTypingIndicator() {
+        const typingElement = document.createElement("div");
+        typingElement.id = "typing-indicator";
+        typingElement.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        chatContent.appendChild(typingElement);
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }
 
-    // Enter key press event
-    chatInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") sendMessage();
+    function removeTypingIndicator() {
+        const typingElement = document.getElementById("typing-indicator");
+        if (typingElement) {
+            typingElement.remove();
+        }
+    }
+
+    // Event listeners
+    sendBtn.addEventListener("click", sendMessage);
+    
+    chatInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
     });
+
+    // Initial bot message
+    addMessage("Hello! I'm your Justice Department assistant. How can I help you today?", "bot");
 });
