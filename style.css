@@ -79,6 +79,8 @@ nav ul li a {
     overflow-x: auto;
     white-space: nowrap;
     padding: 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-image {
@@ -86,39 +88,18 @@ nav ul li a {
     height: 300px;
     margin-right: 50px;
     border-radius: 45px;
+    scroll-snap-align: start;
 }
-.carousel-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.carousel {
-    display: flex;
-    width: 500%;
-    animation: scroll 10s linear infinite;
-}
-
-.carousel img {
-    width: 20%;
-    height: auto;
-}
-
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-
 
 /* Footer */
 footer {
     background: #ffffff;
     color: rgb(0, 0, 0);
-    text-align:  center ;
+    text-align: center;
     padding: 30px;
     margin-top: 50px;
 }
+
 /* Services Section */
 .services-container {
     display: grid;
@@ -131,7 +112,6 @@ footer {
     justify-content: center;
 }
 
-/* Individual Service Box */
 .service-item {
     padding: 15px;
     border-radius: 10px;
@@ -142,7 +122,6 @@ footer {
     transform: scale(1.1);
 }
 
-/* Icons */
 .service-item img {
     width: 100px;
     height: auto;
@@ -150,136 +129,11 @@ footer {
     margin: 0 auto 10px;
 }
 
-/* Service Text */
 .service-item p {
     color: rgb(0, 0, 0);
     font-size: 18px;
     font-weight: bold;
 }
-/* Services Section */
-.services-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
-    padding: 40px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-}
-
-/* Individual Service Box */
-.service-item {
-    display: flex;
-    justify-content: center;
-}
-
-.service-box {
-    background: rgb(0, 0, 0);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    width: 180px;
-}
-
-.service-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Icons */
-.service-box img {
-    width: 80px;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-}
-
-/* Service Text */
-.service-box p {
-    color: #fcfcfc;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-}
-
-
-
-
-
-/* Services Section */
-.services-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px;
-    background-color: #dfedee;
-    border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-}
-
-/* Individual Service Box */
-.service-item {
-    display: flex;
-    justify-content: center;
-}
-
-.service-box {
-    position: relative;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    width: 180px;
-    overflow: hidden;
-}
-
-/* Gradient Border Animation */
-.service-border {
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #00c6ff, #0072ff, #ff0080);
-    border-radius: 14px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.service-box:hover .service-border {
-    opacity: 1;
-}
-
-/* Hover Effect */
-.service-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Icons */
-.service-box img {
-    width: 80px;
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-}
-
-/* Service Text */
-.service-box p {
-    color: #004b91;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-}
-   
-
 
 /* DOJ News Section */
 .doj-news {
@@ -334,10 +188,8 @@ footer {
 }
 
 .news-card a:hover {
-    color: #ff6600; /* DOJ accent color */
+    color: #ff6600;
 }
-    
-
 
 /* DOJ Hero Section */
 .doj-hero {
@@ -377,7 +229,7 @@ footer {
 }
 
 .hero-btn {
-    background: #ffd700; /* DOJ gold color */
+    background: #ffd700;
     color: #003366;
     padding: 12px 20px;
     text-decoration: none;
@@ -389,8 +241,6 @@ footer {
 .hero-btn:hover {
     background: #ffcc00;
 }
- 
-
 
 /* DOJ Testimonials Section */
 .doj-testimonials {
@@ -427,7 +277,6 @@ footer {
     font-size: 14px;
     font-weight: bold;
 }
-
 
 /* DOJ Services Section */
 .doj-services {
@@ -472,5 +321,98 @@ footer {
     font-size: 18px;
     color: #003366;
 }
-  
 
+/* Mobile Responsive Styles */
+@media only screen and (max-width: 768px) {
+    .nav-bar {
+        padding: 10px;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav ul li {
+        margin: 5px 0;
+    }
+    
+    .content-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .info-box {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .image-carousel {
+        padding: 10px;
+    }
+    
+    .carousel-image {
+        width: 250px;
+        height: 150px;
+        margin-right: 15px;
+    }
+    
+    .services-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .service-item {
+        padding: 10px;
+    }
+    
+    .news-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .news-card {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .testimonial {
+        width: 90%;
+    }
+    
+    footer {
+        padding: 20px 10px;
+    }
+    
+    .doj-hero {
+        height: 300px;
+    }
+    
+    .hero-content h1 {
+        font-size: 28px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-bar h1 {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    
+    .doj-hero {
+        height: 250px;
+    }
+    
+    .hero-content h1 {
+        font-size: 24px;
+    }
+    
+    .hero-content p {
+        font-size: 16px;
+    }
+}
