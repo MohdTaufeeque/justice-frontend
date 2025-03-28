@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", function() {
         addMessage(message, "user");
         chatInput.value = "";
         isWaitingForResponse = true;
+        chatInput.disabled = true;
+        sendBtn.disabled = true;
         
         try {
             showTypingIndicator();
@@ -38,20 +40,24 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             
             const data = await response.json();
+            hideTypingIndicator();
             
-            if (data.results?.length > 0) {
+            if (data.results && data.results.length > 0) {
                 data.results.forEach(result => {
                     addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
                 });
             } else {
                 addMessage("I couldn't find relevant information. Please try another question.", "bot");
             }
+            
         } catch (error) {
-            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
-            console.error("Chatbot Error:", error);
-        } finally {
             hideTypingIndicator();
+            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
+            console.error("Error:", error);
+        } finally {
             isWaitingForResponse = false;
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
             chatInput.focus();
         }
     }
@@ -67,12 +73,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Typing indicator
     function showTypingIndicator() {
-        if (document.getElementById("typing-indicator")) return;
-        
         const typingDiv = document.createElement("div");
         typingDiv.className = "typing-indicator";
         typingDiv.id = "typing-indicator";
-        typingDiv.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        typingDiv.innerHTML = `
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        `;
         chatContent.appendChild(typingDiv);
         scrollToBottom();
     }
@@ -84,17 +92,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Scroll to bottom
     function scrollToBottom() {
-        chatContent.scrollTo({
-            top: chatContent.scrollHeight,
-            behavior: 'smooth'
-        });
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
     // Event listeners
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
     sendBtn.addEventListener("click", sendMessage);
-    chatInput.addEventListener("keypress", (e) => e.key === "Enter" && sendMessage());
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
 
     // Initial welcome message
     setTimeout(() => {
