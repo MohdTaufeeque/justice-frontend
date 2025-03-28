@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // चैटबॉट टॉगल फंक्शन
+    // Toggle chatbot visibility
     function toggleChatbot() {
         chatbot.classList.toggle("active");
     }
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
 
-    // मैसेज भेजने का फंक्शन (बिना ऑटो-स्क्रॉल के)
+    // Send message function (NO AUTO-SCROLL)
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (message) {
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             try {
                 showTypingIndicator();
                 
-                // बैकेंड को रिक्वेस्ट भेजें (आपका मूल API)
+                // Simulate API call (replace with your actual API)
                 const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // मैसेज जोड़ने का फंक्शन
+    // Add message to chat
     function addMessage(text, sender) {
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender}-message`;
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
         chatContent.appendChild(msgDiv);
     }
 
-    // टाइपिंग इंडिकेटर फंक्शन
+    // Typing indicator
     function showTypingIndicator() {
         const typingDiv = document.createElement("div");
         typingDiv.className = "typing-indicator";
@@ -76,13 +76,13 @@ document.addEventListener("DOMContentLoaded", function() {
         if (typing) typing.remove();
     }
 
-    // इवेंट लिस्नर्स
+    // Event listeners
     sendBtn.addEventListener("click", sendMessage);
     chatInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") sendMessage();
     });
 
-    // वेलकम मैसेज
+    // Initial welcome message
     setTimeout(() => {
         addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
     }, 500);
