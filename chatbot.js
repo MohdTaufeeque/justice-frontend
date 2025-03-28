@@ -9,17 +9,22 @@ document.addEventListener("DOMContentLoaded", function() {
     // Toggle chatbot visibility
     function toggleChatbot() {
         chatbot.classList.toggle("active");
+        // Auto-focus input when opened
+        if (chatbot.classList.contains("active")) {
+            setTimeout(() => chatInput.focus(), 100);
+        }
     }
 
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
 
-    // Send message function (NO AUTO-SCROLL)
+    // Send message function
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (message) {
             addMessage(message, "user");
             chatInput.value = "";
+            chatInput.focus(); // Keep focus on input
             
             try {
                 showTypingIndicator();
@@ -56,6 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
         msgDiv.className = `message ${sender}-message`;
         msgDiv.textContent = text;
         chatContent.appendChild(msgDiv);
+        // Auto-scroll to bottom (optional)
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
     // Typing indicator
@@ -69,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="typing-dot"></div>
         `;
         chatContent.appendChild(typingDiv);
+        // Auto-scroll to bottom
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
     function hideTypingIndicator() {
@@ -86,4 +95,11 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
     }, 500);
+
+    // Ensure input stays focused
+    chatInput.addEventListener('blur', () => {
+        if (chatbot.classList.contains('active')) {
+            setTimeout(() => chatInput.focus(), 100);
+        }
+    });
 });
