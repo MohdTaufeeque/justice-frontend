@@ -16,9 +16,7 @@
     </header>
 
     <!-- Search Bar -->
-    <section class="search-container">
-        <input type="text" id="searchInput" placeholder="Search resources..." onkeyup="filterResources()">
-    </section>
+  
     <!-- Image Section -->
     <section class="image-section">
         <img src="resources1.jpeg" alt="Government Forms and Resources">
@@ -30,17 +28,18 @@
         <div class="resource-box">
             <h2>📄 Highlighted Forms</h2>
             <p>Find essential government forms used for legal and administrative processes.</p>
-            <ul id="formsList">
-                <li><a href="#">ATF 4473 - Federal Firearms Transaction Record</a></li>
-                <li><a href="#">SF 95 - Claim for Damage, Injury, or Death</a></li>
-                <li><a href="#">DEA Diversion Control Forms</a></li>
-                <li><a href="#">FARA eFile - Foreign Agents Registration</a></li>
-            </ul>
+           <ul id="formsList">
+    <li><a href="itrform.html" onclick="openForm('forms/ITR_Form.pdf')">Income Tax Return (ITR) Form</a></li>
+    <li><a href="adharform.html" onclick="openForm('forms/Aadhaar_Form.pdf')">Aadhaar Card Update Form</a></li>
+    <li><a href="pan.html" onclick="openForm('forms/PAN_Form.pdf')">PAN Card Application Form</a></li>
+    <li><a href="epf.html" onclick="openForm('forms/EPF_Form.pdf')">EPF Withdrawal Form</a></li>
+</ul>
+
             <button class="toggle-btn" onclick="toggleSection('moreForms')">More Forms ⬇</button>
             <div id="moreForms" class="hidden">
                 <ul>
-                    <li><a href="#">DOJ Criminal Justice Forms</a></li>
-                    <li><a href="#">Federal Court Documents</a></li>
+                    <li><a href="#">Voter ID Application Form</a></li>
+                    <li><a href="#">Property Registration Form</a></li>
                 </ul>
             </div>
         </div>
@@ -50,9 +49,9 @@
     <h2>🏛 Government Resources</h2>
     <p>Access official government websites for grants, voting, and regulations.</p>
     <ul id="govResources">
-        <li><a href="#">Grants.gov - Federal Grants & Funding</a></li>
-        <li><a href="#">Regulations.gov - Federal Rules & Regulations</a></li>
-        <li><a href="#">Vote.gov - Voter Registration & Information</a></li>
+        <li><a href="Goverment.html">National Scholarship Portal </a></li>
+        <li><a href="legislative.html"> Legislative Department</a></li>
+        <li><a href="nvsp.html">National Voter’s Service Portal</a></li>
     </ul>
     <button id="govToggleBtn" class="toggle-btn" onclick="toggleSection('moreGov', 'govToggleBtn')">More ⬇</button>
     <div id="moreGov" class="hidden">
@@ -69,9 +68,9 @@
             <h2>⚖️ Legal Assistance</h2>
             <p>Find resources for legal aid, public defenders, and civil rights protection.</p>
             <ul>
-                <li><a href="#">Find a Public Defender</a></li>
-                <li><a href="#">Civil Rights Division - DOJ</a></li>
-                <li><a href="#">Legal Aid Assistance Programs</a></li>
+                <li><a href="public.html">Find a Public Defender</a></li>
+                <li><a href="civil.html">E-Courts Services - DOJ</a></li>
+                <li><a href="legalaid.html">State Legal Services Authorities </a></li>
             </ul>
         </div>
     </section>
