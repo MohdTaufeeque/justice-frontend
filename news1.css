@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    font-size: 24px;
+}
+
+h1 {
+    margin: 0;
+}
+
+#newsContainer {
+    width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px gray;
+}
+
+footer {
+    background: black;
+    color: white;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
