@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const sendBtn = document.getElementById("send-btn");
     const chatContent = document.getElementById("chat-content");
 
-    // Track if we're waiting for response
+    
     let isWaitingForResponse = false;
 
-    // Toggle chatbot visibility
+    
     function toggleChatbot() {
         chatbot.classList.toggle("active");
         if (chatbot.classList.contains("active")) {
@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Send message function
+    
     async function sendMessage() {
         const message = chatInput.value.trim();
         if (!message || isWaitingForResponse) return;
 
-        // Add user message
+        
         addMessage(message, "user");
         chatInput.value = "";
         isWaitingForResponse = true;
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             showTypingIndicator();
             
-            // API call
+            
             const response = await fetch('https://justice-backend-rolw.onrender.com/chatbot/ask', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Add message to chat
+    
     function addMessage(text, sender) {
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${sender}-message`;
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         scrollToBottom();
     }
 
-    // Typing indicator
+    
     function showTypingIndicator() {
         const typingDiv = document.createElement("div");
         typingDiv.className = "typing-indicator";
@@ -90,12 +90,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if (typing) typing.remove();
     }
 
-    // Scroll to bottom
+    
     function scrollToBottom() {
         chatContent.scrollTop = chatContent.scrollHeight;
     }
 
-    // Event listeners
+    
     chatbotBtn.addEventListener("click", toggleChatbot);
     closeBtn.addEventListener("click", toggleChatbot);
     sendBtn.addEventListener("click", sendMessage);
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (e.key === "Enter") sendMessage();
     });
 
-    // Initial welcome message
+    
     setTimeout(() => {
         addMessage("Hello! I'm your Justice Assistant. How may I help you today?", "bot");
     }, 500);
