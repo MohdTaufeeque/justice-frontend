@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const chatbot = document.getElementById("chatbot-container");
     const chatbotBtn = document.getElementById("chatbot-button");
     const closeBtn = document.getElementById("close-chatbot");
@@ -39,15 +39,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (data.results && data.results.length > 0) {
                 data.results.forEach(result => {
-                    addMessage(`${result.title}\n${result.description || result.link || ''}`, "bot");
+                    addMessage(`${result.title}${result.description ? '\n' + result.description : ''}${result.link ? '\n' + result.link : ''}`, "bot");
                 });
             } else {
-                addMessage("I couldn't find relevant information. Please try another question.", "bot");
+                addMessage("❌ Sorry, I couldn't find relevant information.", "bot");
             }
 
         } catch (error) {
             hideTypingIndicator();
-            addMessage("Sorry, I'm having trouble connecting. Please try again later.", "bot");
+            addMessage("⚠️ Sorry, I'm having trouble connecting. Please try again later.", "bot");
             console.error("Error:", error);
         } finally {
             isWaitingForResponse = false;
