@@ -16,6 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   
+    function isHindiText(text) {
+      return /[\u0900-\u097F]/.test(text) || 
+             ["namaste", "namaskar", "hindi", "हिंदी"].some(word => 
+              text.toLowerCase().includes(word));
+    }
+  
     async function sendMessage() {
       const message = chatInput.value.trim();
       if (!message || isWaitingForResponse) return;
@@ -29,11 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Handle first interaction
       if (isFirstInteraction) {
         isFirstInteraction = false;
-        const englishGreetings = ["hi", "hello", "hey"];
-        const hindiGreetings = ["namaste", "salam", "pranam"];
-        
-        if ([...englishGreetings, ...hindiGreetings].some(greet => message.toLowerCase().includes(greet))) {
-          const isHindi = hindiGreetings.some(greet => message.toLowerCase().includes(greet));
+        const isHindi = isHindiText(message);
+        if (isHindi || ["hi", "hello", "hey"].some(greet => message.toLowerCase().includes(greet))) {
           addMessage(
             isHindi ? "👋 नमस्ते! मैं आपका न्याय सहायक हूँ। मैं आपकी कैसे मदद कर सकता हूँ?"
                     : "👋 Hello! I'm your Justice Assistant. How may I help you today?", 
@@ -68,15 +71,19 @@ document.addEventListener("DOMContentLoaded", function () {
           data.results.forEach(result => {
             let responseText = result.title;
             if (result.description) responseText += `\n\n${result.description}`;
-            if (result.link) responseText += `\n\n🔗 More info: <a href="${result.link}" target="_blank">${result.link}</a>`;
+            if (result.link) responseText += `\n\n🔗 More info: <a href="${result.link}" target="_blank" class="chat-link">${result.link}</a>`;
             addMessage(responseText, "bot");
           });
         } else {
-          addMessage("❌ Sorry, I couldn't find relevant information.", "bot");
+          addMessage(isHindiText(message) ? 
+            "❌ क्षमा करें, मैं प्रासंगिक जानकारी नहीं ढूंढ पाया।" :
+            "❌ Sorry, I couldn't find relevant information.", "bot");
         }
       } catch (error) {
         hideTypingIndicator();
-        addMessage("⚠️ Sorry, I'm having trouble connecting. Please try again later.", "bot");
+        addMessage(isHindiText(message) ?
+          "⚠️ क्षमा करें, कनेक्ट होने में समस्या हो रही है। कृपया बाद में पुनः प्रयास करें।" :
+          "⚠️ Sorry, I'm having trouble connecting. Please try again later.", "bot");
         console.error("Error:", error);
       } finally {
         isWaitingForResponse = false;
