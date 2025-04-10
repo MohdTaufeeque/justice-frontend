@@ -29,9 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
       // Handle first interaction
       if (isFirstInteraction) {
         isFirstInteraction = false;
-        const greetings = ["hi", "hello", "hey", "namaste", "salam"];
-        if (greetings.some(greet => message.toLowerCase().includes(greet))) {
-          addMessage("👋 Hello! I'm your Justice Assistant. How may I help you today?", "bot");
+        const englishGreetings = ["hi", "hello", "hey"];
+        const hindiGreetings = ["namaste", "salam", "pranam"];
+        
+        if ([...englishGreetings, ...hindiGreetings].some(greet => message.toLowerCase().includes(greet))) {
+          const isHindi = hindiGreetings.some(greet => message.toLowerCase().includes(greet));
+          addMessage(
+            isHindi ? "👋 नमस्ते! मैं आपका न्याय सहायक हूँ। मैं आपकी कैसे मदद कर सकता हूँ?"
+                    : "👋 Hello! I'm your Justice Assistant. How may I help you today?", 
+            "bot"
+          );
           isWaitingForResponse = false;
           chatInput.disabled = false;
           sendBtn.disabled = false;
@@ -61,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
           data.results.forEach(result => {
             let responseText = result.title;
             if (result.description) responseText += `\n\n${result.description}`;
-            if (result.link) responseText += `\n\n🔗 More info: ${result.link}`;
+            if (result.link) responseText += `\n\n🔗 More info: <a href="${result.link}" target="_blank">${result.link}</a>`;
             addMessage(responseText, "bot");
           });
         } else {
@@ -82,7 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function addMessage(text, sender) {
       const msgDiv = document.createElement("div");
       msgDiv.className = `message ${sender}-message`;
-      msgDiv.textContent = text;
+      
+      // Preserve line breaks and make links clickable
+      const htmlText = text
+        .replace(/\n/g, '<br>')
+        .replace(/<a href/g, '<a class="chat-link" href');
+      
+      msgDiv.innerHTML = htmlText;
       chatContent.appendChild(msgDiv);
       scrollToBottom();
     }
@@ -116,4 +129,4 @@ document.addEventListener("DOMContentLoaded", function () {
     chatInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") sendMessage();
     });
-  });
+});
